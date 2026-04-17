@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}المساعد الذكي{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>المساعد الفلكي الذكي</h2>
+  <p>اسأل أي سؤال عن الفضاء وسيجيبك المساعد عبر واجهة API مكتوبة ببايثون.</p>
+  <div id="chatBox" class="chat-box">
+    <div class="msg bot">أهلًا بك 👋 اسألني عن الكون، المجرات، والكواكب.</div>
+  </div>
+  <form id="chatForm" class="chat-form" data-api-url="/api/assistant">
+    <input id="userInput" type="text" placeholder="مثال: ما هي المادة المظلمة؟" required />
+    <button type="submit">إرسال</button>
+  </form>
+</section>
+{% endblock %}
