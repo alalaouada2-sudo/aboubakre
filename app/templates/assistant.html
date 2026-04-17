@@ -1,14 +1,16 @@
 {% extends "base.html" %}
-{% block title %}المساعد الذكي{% endblock %}
+{% block title %}المساعد الذكي | مدونة الكون{% endblock %}
 {% block content %}
-<section class="card">
-  <h2>المساعد الفلكي الذكي</h2>
-  <p>اسأل أي سؤال عن الفضاء وسيجيبك المساعد عبر واجهة API مكتوبة ببايثون.</p>
+<section class="panel">
+  <h3>المساعد الفلكي الذكي</h3>
+  <p>اكتب سؤالك وسيتم الرد من واجهة Python API مباشرة.</p>
+
   <div id="chatBox" class="chat-box">
-    <div class="msg bot">أهلًا بك 👋 اسألني عن الكون، المجرات، والكواكب.</div>
+    <div class="msg bot">مرحبًا 👋 أنا جاهز للإجابة عن أسئلتك حول الكون.</div>
   </div>
+
   <form id="chatForm" class="chat-form" data-api-url="/api/assistant">
-    <input id="userInput" type="text" placeholder="مثال: ما هي المادة المظلمة؟" required />
+    <input id="userInput" type="text" placeholder="مثال: ما هو السديم؟" required />
     <button type="submit">إرسال</button>
   </form>
 </section>

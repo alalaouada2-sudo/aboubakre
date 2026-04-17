@@ -2,35 +2,71 @@ from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 
+ARTICLES = {
+    "dark-matter": {
+        "title": "المادة المظلمة",
+        "summary": "مكوّن غير مرئي يشكل جزءًا ضخمًا من كتلة الكون.",
+        "content": "رغم أننا لا نراها مباشرة، فإن العلماء يستدلون عليها من دوران المجرات وعدسات الجاذبية.",
+    },
+    "nebula": {
+        "title": "السُّدم",
+        "summary": "سحب غازية كونية قد تكون مهدًا لولادة النجوم.",
+        "content": "تختلف ألوان السُّدم حسب العناصر الكيميائية والإشعاع الصادر من النجوم القريبة.",
+    },
+    "mars": {
+        "title": "العيش على المريخ",
+        "summary": "حلم علمي يتطلب تقنيات متقدمة للحماية والبقاء.",
+        "content": "أبرز التحديات تشمل الإشعاع، البرودة الشديدة، وضرورة إنتاج الغذاء والأكسجين محليًا.",
+    },
+    "black-holes": {
+        "title": "الثقوب السوداء",
+        "summary": "أجسام فائقة الكثافة بجاذبية لا تسمح للضوء بالهروب.",
+        "content": "يمكن رصدها عبر تأثيرها على النجوم القريبة والأشعة السينية الصادرة من المواد المتساقطة نحوها.",
+    },
+    "exoplanets": {
+        "title": "الكواكب الخارجية",
+        "summary": "عوالم خارج نظامنا الشمسي قد تحمل شروطًا للحياة.",
+        "content": "تعتمد طرق اكتشافها على عبور الكوكب أمام النجم أو قياس اهتزاز النجم الناتج عن الجاذبية.",
+    },
+    "supernova": {
+        "title": "المستعرات العظمى",
+        "summary": "انفجارات هائلة تساهم في نشر العناصر الثقيلة في الكون.",
+        "content": "هذه الانفجارات تصنع عناصر أساسية مثل الحديد وتسهم في دورة ميلاد النجوم الجديدة.",
+    },
+    "meteor-showers": {
+        "title": "زخات الشهب",
+        "summary": "مشهد سماوي جميل يحدث عند احتراق جسيمات صغيرة في الغلاف الجوي.",
+        "content": "أفضل وقت للرصد يكون بعد منتصف الليل وبعيدًا عن أضواء المدن.",
+    },
+    "jwst": {
+        "title": "تلسكوب جيمس ويب",
+        "summary": "عين الكون الحديثة لرصد الأجسام البعيدة بالأشعة تحت الحمراء.",
+        "content": "قدّم صورًا مذهلة كشفت تفاصيل غير مسبوقة عن المجرات الأولى وتكوّن النجوم.",
+    },
+}
+
 PAGES = [
     ("home", "الصفحة الرئيسية", "/"),
     ("assistant", "المساعد الذكي", "/assistant"),
     ("about", "من نحن", "/about"),
     ("contact", "تواصل معنا", "/contact"),
-    ("article_dark_matter", "المادة المظلمة", "/articles/dark-matter"),
-    ("article_nebula", "السُّدم", "/articles/nebula"),
-    ("article_mars", "العيش على المريخ", "/articles/mars"),
-    ("article_black_holes", "الثقوب السوداء", "/articles/black-holes"),
-    ("article_exoplanets", "الكواكب الخارجية", "/articles/exoplanets"),
-    ("article_supernova", "المستعرات العظمى", "/articles/supernova"),
-    ("article_meteor_showers", "زخات الشهب", "/articles/meteor-showers"),
-    ("article_jwst", "تلسكوب جيمس ويب", "/articles/jwst"),
+    *[(f"article_{slug}", article["title"], f"/articles/{slug}") for slug, article in ARTICLES.items()],
 ]
 
 
 def ai_reply(question: str) -> str:
     q = question.lower()
     if "مجرة" in q or "galaxy" in q:
-        return "المجرة نظام ضخم من النجوم والغاز والغبار والمادة المظلمة مرتبط بالجاذبية."
+        return "المجرة مدينة كونية ضخمة تضم مليارات النجوم والغاز والغبار والمادة المظلمة."
     if "سديم" in q or "nebula" in q:
-        return "السديم سحابة غازية قد تكون مهدًا لولادة النجوم أو بقايا انفجار نجمي."
+        return "السديم سحابة كونية من الغاز والغبار، وقد يكون مهدًا لولادة نجوم جديدة."
     if "ثقب" in q or "black hole" in q:
-        return "الثقب الأسود يملك جاذبية هائلة تمنع حتى الضوء من الهروب من أفق الحدث."
+        return "الثقب الأسود جسم فائق الكثافة، جاذبيته قوية لدرجة أن الضوء لا يهرب منه."
     if "شهب" in q or "meteor" in q:
-        return "أفضل رصد للشهب يكون بعيدًا عن التلوث الضوئي وبعد منتصف الليل مع سماء صافية."
+        return "لرصد الشهب: ابتعد عن المدينة، اختر ليلة صافية، وانتظر 20 دقيقة لتأقلم العينين."
     if "مريخ" in q or "mars" in q:
-        return "العيش على المريخ ممكن نظريًا لكنه يتطلب حماية من الإشعاع وأنظمة دعم حياة متقدمة."
-    return "سؤال جميل ✨ اكتب موضوعًا فلكيًا محددًا وسأعطيك شرحًا مبسطًا وواضحًا."
+        return "استيطان المريخ ممكن نظريًا، لكنه يحتاج تقنيات متقدمة للحماية من الإشعاع وتوليد الموارد."
+    return "سؤال رائع ✨ اكتب موضوعًا محددًا عن الفضاء وسأجيبك بطريقة مبسطة."
 
 
 @app.context_processor
@@ -40,12 +76,7 @@ def inject_nav_pages():
 
 @app.route("/")
 def home():
-    featured = [
-        {"title": "المادة المظلمة", "url": "/articles/dark-matter"},
-        {"title": "الثقوب السوداء", "url": "/articles/black-holes"},
-        {"title": "تلسكوب جيمس ويب", "url": "/articles/jwst"},
-    ]
-    return render_template("home.html", featured=featured)
+    return render_template("home.html", articles=ARTICLES)
 
 
 @app.route("/assistant")
@@ -63,44 +94,12 @@ def contact_page():
     return render_template("contact.html")
 
 
-@app.route("/articles/dark-matter")
-def article_dark_matter():
-    return render_template("article_dark_matter.html")
-
-
-@app.route("/articles/nebula")
-def article_nebula():
-    return render_template("article_nebula.html")
-
-
-@app.route("/articles/mars")
-def article_mars():
-    return render_template("article_mars.html")
-
-
-@app.route("/articles/black-holes")
-def article_black_holes():
-    return render_template("article_black_holes.html")
-
-
-@app.route("/articles/exoplanets")
-def article_exoplanets():
-    return render_template("article_exoplanets.html")
-
-
-@app.route("/articles/supernova")
-def article_supernova():
-    return render_template("article_supernova.html")
-
-
-@app.route("/articles/meteor-showers")
-def article_meteor_showers():
-    return render_template("article_meteor_showers.html")
-
-
-@app.route("/articles/jwst")
-def article_jwst():
-    return render_template("article_jwst.html")
+@app.route("/articles/<slug>")
+def article_page(slug: str):
+    article = ARTICLES.get(slug)
+    if not article:
+        return render_template("404.html"), 404
+    return render_template("article.html", article=article)
 
 
 @app.route("/api/assistant", methods=["POST"])
