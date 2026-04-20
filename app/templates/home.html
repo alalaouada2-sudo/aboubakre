@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}مدونة الكون | موقع واحد{% endblock %}
+{% block content %}
+<section class="panel">
+  <h3>🌠 كل شيء في مكان واحد</h3>
+  <p>
+    هنا ستجد المقالات، المساعد الذكي، ونبذة عن المشروع في واجهة موحدة ومظهر أجمل وأسهل للتصفح.
+  </p>
+</section>
+
+<section class="grid two">
+  <article class="panel">
+    <h3>🧠 المساعد الذكي</h3>
+    <p>توجه إلى صفحة المساعد واسأل عن أي موضوع فلكي وسيقوم خادم بايثون بالرد مباشرة.</p>
+    <a class="btn" href="/assistant">افتح المساعد</a>
+  </article>
+
+  <article class="panel">
+    <h3>ℹ️ من نحن</h3>
+    <p>مشروع عربي لتبسيط علم الفلك، بواجهة واضحة ومحتوى مناسب للمبتدئين والمهتمين.</p>
+    <a class="btn" href="/about">اقرأ المزيد</a>
+  </article>
+</section>
+
+<section class="panel">
+  <h3>📚 مقالات الفضاء</h3>
+  <div class="grid cards">
+    {% for slug, article in articles.items() %}
+      <article class="card">
+        <h4>{{ article.title }}</h4>
+        <p>{{ article.summary }}</p>
+        <a href="/articles/{{ slug }}">اقرأ المقال</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel">
+  <h3>📬 تواصل معنا</h3>
+  <p>هل لديك اقتراح لتطوير الموقع أو موضوع جديد؟ نرحب برسالتك.</p>
+  <a class="btn" href="/contact">اذهب لصفحة التواصل</a>
+</section>
+{% endblock %}

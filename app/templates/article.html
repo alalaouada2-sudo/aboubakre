@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} | مدونة الكون{% endblock %}
+{% block content %}
+<article class="panel article-page">
+  <h3>{{ article.title }}</h3>
+  <p class="lead">{{ article.summary }}</p>
+  <p>{{ article.content }}</p>
+  <a class="btn" href="/">⬅ العودة إلى الرئيسية</a>
+</article>
+{% endblock %}

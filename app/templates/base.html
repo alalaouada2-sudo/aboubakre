@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}مدونة الكون{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="overlay"></div>
+      <nav class="nav container">
+        <h1><a href="{{ url_for('home') }}">🌌 مدونة الكون</a></h1>
+        <div class="menu">
+          <a href="/">الرئيسية</a>
+          <a href="/assistant">المساعد</a>
+          <a href="/about">من نحن</a>
+          <a href="/contact">تواصل</a>
+        </div>
+      </nav>
+      <section class="hero-copy container">
+        <p class="tagline">بوابتك العربية إلى عالم الفلك والمجرات</p>
+        <h2>كل المواضيع في موقع واحد بتصميم حديث وتجربة مريحة</h2>
+      </section>
+    </header>
+
+    <main class="container page">{% block content %}{% endblock %}</main>
+
+    <footer>
+      <p>مدونة الكون — تجربة موحدة لعشاق الفضاء ✨</p>
+    </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
